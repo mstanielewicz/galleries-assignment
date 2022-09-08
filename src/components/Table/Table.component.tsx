@@ -1,18 +1,18 @@
 import React from "react";
 import TableHeader from "../TableHeader";
 import TableRow from "../TableRow";
+import { STable } from "./Table.styles";
 
 const Table = ({ rows = [] }: any) => {
-  console.log(rows.slice(0, 30));
   return (
-    <table>
+    <STable>
       <TableHeader />
       <tbody>
-        {rows.slice(0, 30).map((row: any) => (
+        {rows.map((row: any) => (
           <TableRow key={row.id} data={row} />
         ))}
       </tbody>
-    </table>
+    </STable>
   );
 };
 

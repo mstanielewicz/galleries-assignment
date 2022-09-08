@@ -1,8 +1,9 @@
 import React from "react";
+import { STableHead } from "./TableHeader.styles";
 
 const TableHeader = () => {
   return (
-    <thead>
+    <STableHead>
       <tr>
         <th>Title</th>
         <th>Description</th>
@@ -10,7 +11,7 @@ const TableHeader = () => {
         <th>Gallery Title</th>
         <th>Type of Exhibition</th>
       </tr>
-    </thead>
+    </STableHead>
   );
 };
 

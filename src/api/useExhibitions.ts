@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-const getExhibitions = async () => {
+const getExhibitions = async ({ queryKey: [, { page }] }: any) => {
   const response = await fetch(
-    "https://api.artic.edu/api/v1/exhibitions?fields=id,description,gallery_title,is_featured,title,type&limit=30"
+    `https://api.artic.edu/api/v1/exhibitions?fields=id,description,gallery_title,is_featured,title,type&limit=30&page=${page}`
   );
 
   if (!response.ok) {
@@ -14,8 +14,8 @@ const getExhibitions = async () => {
   return exhibitions;
 };
 
-const useExhibitions = () => {
-  const query = useQuery(["exhibitions"], getExhibitions);
+const useExhibitions = ({ page }: any) => {
+  const query = useQuery(["exhibitions", { page }], getExhibitions);
 
   return query;
 };
