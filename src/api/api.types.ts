@@ -18,7 +18,7 @@ export interface ExhibitionData {
 
 export interface GetExhibitionsParams {
   queryKey: [
-    resource: string, params: { page: number, search: string }
+    resource: string, params: { page: number, search: string, sort?: string }
   ]
 }
 

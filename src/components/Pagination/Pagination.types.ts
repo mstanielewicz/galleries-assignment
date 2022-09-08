@@ -6,9 +6,7 @@ export type PaginationProps = {
 };
 
 export type CreatePagesArrayParams = {
-  from?: number;
-  include?: number;
+  include: number;
   length?: number;
-  max: number;
-  to?: number;
+  max?: number;
 };

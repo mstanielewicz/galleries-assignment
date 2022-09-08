@@ -1,36 +1,24 @@
+import findIndex from "lodash.findindex";
 import { CreatePagesArrayParams } from "./Pagination.types";
 
 export const createPagesArray = ({
-  from,
   include,
   length = 9,
-  max,
-  to,
+  max = 1,
 }: CreatePagesArrayParams) => {
-  if (include) {
-    const fromWhenInclude =
-      include / length < 1 ? 1 : Math.floor(include / length) * length;
+  if (max === 1 || length === 1) return [1];
 
-    if (fromWhenInclude + length > max) {
-      return Array.from(
-        { length: length - (fromWhenInclude + length - max) + 1 },
-        (_, index) => index + fromWhenInclude
-      );
+  const pagesGroups = Array.from(
+    { length: Math.ceil(max / length) },
+    (_, index) => {
+      const startPage = index * length + 1;
+      return Array.from({ length }, (_, index) =>
+        index + startPage > max ? 0 : index + startPage
+      ).filter((page) => page !== 0);
     }
+  );
 
-    return Array.from({ length }, (_, index) => index + fromWhenInclude);
-  }
-
-  if (from && from + length > max) {
-    return Array.from(
-      { length: length - (from + length - max) + 1 },
-      (_, index) => index + from
-    );
-  }
-
-  if (from) {
-    return Array.from({ length }, (_, index) => index + from);
-  }
-
-  return Array.from({ length }, (_, index) => index + to! - length + 1);
+  return pagesGroups[
+    findIndex(pagesGroups, (pages: number[]) => pages.includes(include))
+  ];
 };

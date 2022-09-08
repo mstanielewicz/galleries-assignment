@@ -1,8 +1,8 @@
-import React from "react";
-import { QueryKey, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { stringify } from "qs";
 import sortBy from "lodash.sortby";
 import {
+  ExhibitionData,
   ExhibitionDataResponse,
   GetExhibitionsParams,
   UseExhibitionsParams
@@ -11,21 +11,38 @@ import {
 const getExhibitions = async ({
   queryKey: [, { page, search }],
 }: GetExhibitionsParams): Promise<ExhibitionDataResponse> => {
-  const body = stringify({
-    from: page === 1 ? 0 : page * 30 + 1,
-    size: 30,
-    query: {
-      multi_match: {
-        query: search,
-        fields: ["description", "gallery_title", "title", "type"],
+  if (search) {
+    const body = stringify({
+      from: page === 1 ? 0 : (page - 1) * 30 + 1,
+      size: 30,
+      query: {
+        multi_match: {
+          query: search,
+          fields: ["description", "gallery_title", "title", "type"],
+        },
       },
-    },
-  });
+    });
+
+    const idsReponse = await fetch(`https://api.artic.edu/api/v1/exhibitions/search?${body}`)
+    const idsData = await idsReponse.json();
+    const ids = idsData.data.map(({ id }:ExhibitionData) => id)
+
+    const dataResponse = await fetch(
+      `https://api.artic.edu/api/v1/exhibitions?ids=${ids.join(',')}&fields=id,description,gallery_title,is_featured,title,type&limit=30&page=${page}`
+    );
+
+    if (!dataResponse.ok) {
+      throw new Error("Problem fetching exhibitions");
+    }
+
+    const data = await dataResponse.json();
+
+    return { ...data, pagination: { total_pages: idsData.pagination.total_pages } }
+  }
+
 
   const response = await fetch(
-    search
-      ? `https://api.artic.edu/api/v1/exhibitions/search?${body}`
-      : `https://api.artic.edu/api/v1/exhibitions?fields=id,description,gallery_title,is_featured,title,type&limit=30&page=${page}`
+    `https://api.artic.edu/api/v1/exhibitions?fields=id,description,gallery_title,is_featured,title,type&limit=30&page=${page}`
   );
 
   if (!response.ok) {
@@ -47,15 +64,13 @@ const useExhibitions = ({ page, search, sort = "" }: UseExhibitionsParams) => {
     keepPreviousData: true,
   });
 
-  const sortedData = React.useMemo(
-    () => sortBy(data?.data || Array.from({ length: 30 }, () => ({})), sort),
-    [data?.data, sort]
-  );
-
   return {
-    data: { data: sortedData, totalPages: data?.pagination?.total_pages },
-    ...rest,
-  };
+    data: {
+      data: sortBy(data?.data || Array.from({ length: 30 }, () => ({})), sort),
+      totalPages: data?.pagination?.total_pages
+    },
+    ...rest
+  }
 };
 
 export default useExhibitions;

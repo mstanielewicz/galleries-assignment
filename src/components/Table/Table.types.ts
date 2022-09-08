@@ -5,5 +5,5 @@ export type TableProps = {
   fetching: boolean;
   onSortingBy: (sorting: string) => void;
   rows: ExhibitionData[];
-  sortingBy: string;
+  sortingBy?: string;
 };
