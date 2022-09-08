@@ -11,8 +11,10 @@ export const STableRow = styled("tr")<STableRowProps>`
 
   td {
     display: flex;
+    box-sizing: border-box;
     justify-content: center;
     align-items: center;
+    height: 80px;
     padding: ${PADDING.TABLE_CELL};
     border: 1px solid ${PALLETE.GREY};
     background-color: ${({ featured }) =>

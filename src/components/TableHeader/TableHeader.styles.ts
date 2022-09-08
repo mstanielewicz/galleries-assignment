@@ -8,13 +8,16 @@ export const STableHead = styled("thead")`
     grid-column-start: 1;
     grid-column-end: 6;
     background-color: ${PALLETE.GREY};
-
-    th {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      padding: ${PADDING.TABLE_CELL};
-      text-transform: bold;
-    }
   }
+`;
+
+export const STableHeadCell = styled("th")<{ sortingByColumn: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: ${PADDING.TABLE_CELL};
+  text-transform: bold;
+  text-decoration: ${({ sortingByColumn }) =>
+    sortingByColumn ? "underline" : "none"};
+  cursor: pointer;
 `;

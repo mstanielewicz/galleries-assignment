@@ -1,15 +1,22 @@
 import React from "react";
 import truncate from "lodash.truncate";
 import { STableRow } from "./TableRow.styles";
+import { ExhibitionData } from "../../api/api.types";
 
-const TableRow = ({ data }: any) => {
+const TableRow = ({
+  description,
+  gallery_title,
+  is_featured,
+  title,
+  type,
+}: ExhibitionData) => {
   return (
-    <STableRow featured={data.is_featured}>
-      <td>{truncate(data.title, { length: 80, separator: " " })}</td>
-      <td>{truncate(data.description, { length: 200, separator: " " })}</td>
-      <td>{data.is_featured ? "Yes" : "No"}</td>
-      <td>{data.gallery_title}</td>
-      <td>{data.type}</td>
+    <STableRow featured={is_featured}>
+      <td>{truncate(title || "-", { length: 80, separator: " " })}</td>
+      <td>{truncate(description || "-", { length: 200, separator: " " })}</td>
+      <td>{is_featured ? "Yes" : "No"}</td>
+      <td>{gallery_title || "-"}</td>
+      <td>{type || "-"}</td>
     </STableRow>
   );
 };

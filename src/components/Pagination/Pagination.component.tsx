@@ -1,21 +1,25 @@
 import React from "react";
 import Button from "../Button";
 import { SContainer } from "./Pagination.styles";
+import { PaginationProps } from "./Pagination.types";
 import { createPagesArray } from "./Pagination.utils";
 
-const Pagination = ({
-  onPageChange,
-  page,
-  totalPages,
-}: {
-  onPageChange: (p: number) => void;
-  page: number;
-  totalPages: number;
-}) => {
-  const [currentPage, setCurrentPage] = React.useState(page);
-  const [pagesNumbers, setPagesNumbers] = React.useState(
-    createPagesArray({ length: totalPages < 9 ? totalPages : 9, include: page })
+const Pagination = ({ onPageChange, page, totalPages }: PaginationProps) => {
+  const [currentPage, setCurrentPage] = React.useState<number>(page);
+  const [pagesNumbers, setPagesNumbers] = React.useState<number[]>(
+    createPagesArray({
+      length: totalPages && totalPages < 9 ? totalPages : 9,
+      include: page,
+    })
   );
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+    createPagesArray({
+      length: totalPages && totalPages < 9 ? totalPages : 9,
+      include: 1,
+    });
+  }, [totalPages]);
 
   React.useEffect(() => {
     onPageChange(currentPage);
@@ -52,12 +56,12 @@ const Pagination = ({
     );
   };
 
-  const nextDisabled = currentPage === totalPages;
-  const previousDisabled = currentPage === 1;
+  const nextDisabled = currentPage === totalPages || !totalPages;
+  const previousDisabled = currentPage === 1 || !totalPages;
 
   const nextScrollDisabled =
-    pagesNumbers[pagesNumbers.length - 1] === totalPages;
-  const previousScrollDisabled = pagesNumbers[0] === 1;
+    pagesNumbers[pagesNumbers.length - 1] === totalPages || !totalPages;
+  const previousScrollDisabled = pagesNumbers[0] === 1 || !totalPages;
 
   return (
     <SContainer>
@@ -67,10 +71,11 @@ const Pagination = ({
           label="<"
           onClick={handlePreviousScroll}
         />
-        {pagesNumbers.map((num: number, index) => (
+        {pagesNumbers.map((num: number) => (
           <Button
-            key={index}
-            label={num}
+            disabled={!totalPages}
+            key={num}
+            label={String(num)}
             selected={num === currentPage}
             onClick={() => setCurrentPage(num)}
           />

@@ -1,10 +1,12 @@
+import { CreatePagesArrayParams } from "./Pagination.types";
+
 export const createPagesArray = ({
   from,
   include,
   length = 9,
   max,
   to,
-}: any) => {
+}: CreatePagesArrayParams) => {
   if (include) {
     const fromWhenInclude =
       include / length < 1 ? 1 : Math.floor(include / length) * length;
@@ -30,5 +32,5 @@ export const createPagesArray = ({
     return Array.from({ length }, (_, index) => index + from);
   }
 
-  return Array.from({ length }, (_, index) => index + to - length + 1);
+  return Array.from({ length }, (_, index) => index + to! - length + 1);
 };

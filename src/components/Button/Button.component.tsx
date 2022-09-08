@@ -1,6 +1,6 @@
 import React from "react";
-
 import { SButton } from "./Button.styles";
+import { ButtonProps } from "./Button.types";
 
 const Button = ({
   disabled,
@@ -8,7 +8,7 @@ const Button = ({
   label,
   selected,
   width,
-}: any): JSX.Element => (
+}: ButtonProps): JSX.Element => (
   <SButton
     disabled={disabled}
     onClick={onClick}

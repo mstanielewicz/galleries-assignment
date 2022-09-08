@@ -1,18 +1,35 @@
 import React from "react";
 import TableHeader from "../TableHeader";
 import TableRow from "../TableRow";
-import { STable } from "./Table.styles";
+import Loading from "../Loading";
+import { SContainer, SError, SFetching, STable } from "./Table.styles";
+import { TableProps } from "./Table.types";
+import { ExhibitionData } from "../../api/api.types";
 
-const Table = ({ rows = [] }: any) => {
+const Table = ({
+  error,
+  fetching,
+  onSortingBy,
+  rows,
+  sortingBy,
+}: TableProps) => {
   return (
-    <STable>
-      <TableHeader />
-      <tbody>
-        {rows.map((row: any) => (
-          <TableRow key={row.id} data={row} />
-        ))}
-      </tbody>
-    </STable>
+    <SContainer>
+      {error ? <SError>Someting went wrong :( Please refresh...</SError> : null}
+      {fetching ? (
+        <SFetching>
+          <Loading />
+        </SFetching>
+      ) : null}
+      <STable>
+        <TableHeader onSortingBy={onSortingBy} sortingBy={sortingBy} />
+        <tbody>
+          {rows.map((exhibition: ExhibitionData) => (
+            <TableRow key={exhibition.id} {...exhibition} />
+          ))}
+        </tbody>
+      </STable>
+    </SContainer>
   );
 };
 

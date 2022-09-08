@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import { CONTAINER_WIDTH, PALLETE } from "../../styles/constants";
+import { PALLETE } from "../../styles/constants";
+import { SButtonProps } from "./Button.types";
 
-export const SButton = styled("button")<{
-  disabled: boolean;
-  selected: boolean;
-  width: string;
-}>`
+export const SButton = styled("button")<SButtonProps>`
   display: inline-block;
   min-height: 35px;
   min-width: 40px;

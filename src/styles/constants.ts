@@ -13,4 +13,6 @@ export enum PALLETE {
   GREEN = "#CDEAC4",
   GREY = "#E4E4E4",
   RED = "#F4D5D5",
+  BLUE = "#3498db",
+  WHITE = "#f3f3f3",
 }
