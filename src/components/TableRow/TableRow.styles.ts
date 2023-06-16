@@ -25,3 +25,25 @@ export const STableRow = styled("tr")<STableRowProps>`
     text-align: justify;
   }
 `;
+
+export const STableRowTitle = styled("div")`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const STableRowShowMoreButton = styled("p")`
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  min-width: min-content;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline dotted;
+  }
+`;

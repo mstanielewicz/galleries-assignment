@@ -1,7 +1,5 @@
 export interface ExhibitionDataResponse {
-  data: {
-    data: ExhibitionData[];
-  };
+  data: ExhibitionData[];
   pagination: {
     total_pages: number;
   };
@@ -17,14 +15,10 @@ export interface ExhibitionData {
 }
 
 export interface GetExhibitionsParams {
-  queryKey: [
-    resource: string, params: { page: number, search: string, sort?: string }
-  ]
+  queryKey: [resource: string, params: { page: number; search: string }];
 }
-
 
 export type UseExhibitionsParams = {
-  page: number,
-  search: string,
-  sort?: string
-}
+  page: number;
+  search: string;
+};

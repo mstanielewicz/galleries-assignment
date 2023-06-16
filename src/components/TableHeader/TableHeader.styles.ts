@@ -11,13 +11,11 @@ export const STableHead = styled("thead")`
   }
 `;
 
-export const STableHeadCell = styled("th")<{ sortingByColumn: boolean }>`
+export const STableHeadCell = styled("th")`
   display: flex;
   justify-content: center;
   align-items: flex-end;
   padding: ${PADDING.TABLE_CELL};
   text-transform: bold;
-  text-decoration: ${({ sortingByColumn }) =>
-    sortingByColumn ? "underline" : "none"};
-  cursor: pointer;
+  text-decoration: none;
 `;

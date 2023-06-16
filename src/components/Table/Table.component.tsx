@@ -6,13 +6,7 @@ import { SContainer, SError, SFetching, STable } from "./Table.styles";
 import { TableProps } from "./Table.types";
 import { ExhibitionData } from "../../api/api.types";
 
-const Table = ({
-  error,
-  fetching,
-  onSortingBy,
-  rows,
-  sortingBy,
-}: TableProps) => {
+const Table = ({ error, fetching, rows }: TableProps) => {
   return (
     <SContainer>
       {error ? <SError>Someting went wrong :( Please refresh...</SError> : null}
@@ -22,7 +16,7 @@ const Table = ({
         </SFetching>
       ) : null}
       <STable>
-        <TableHeader onSortingBy={onSortingBy} sortingBy={sortingBy} />
+        <TableHeader />
         <tbody>
           {rows.map((exhibition: ExhibitionData) => (
             <TableRow key={exhibition.id} {...exhibition} />

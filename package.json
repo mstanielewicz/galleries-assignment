@@ -18,7 +18,6 @@
     "@types/styled-components": "^5.1.26",
     "lodash.debounce": "^4.0.8",
     "lodash.findindex": "^4.6.0",
-    "lodash.sortby": "^4.7.0",
     "lodash.truncate": "^4.4.2",
     "qs": "^6.11.0",
     "react": "^18.2.0",

@@ -1,4 +1,4 @@
-export const TABLE_COLUMNS = "2fr 6fr 1fr 2fr 1fr";
+export const TABLE_COLUMNS = "4fr 5fr 1fr 2fr 1fr";
 
 export const CONTAINER_WIDTH = "1366px";
 

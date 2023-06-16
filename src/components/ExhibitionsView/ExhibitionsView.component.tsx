@@ -8,7 +8,6 @@ import { SContainer } from "./ExhibitionsView.styles";
 
 const ExhibitionsView = (): JSX.Element => {
   const [page, setPage] = React.useState<number>(1);
-  const [sortingBy, setSortingBy] = React.useState<string | undefined>();
   const [search, setSearch] = React.useState<string>("");
 
   const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -31,19 +30,12 @@ const ExhibitionsView = (): JSX.Element => {
   const { isError, data, isFetching } = useExhibitions({
     page,
     search,
-    sort: sortingBy,
   });
 
   return (
     <SContainer>
       <Search onChange={debouncedSearchChangeHandler} />
-      <Table
-        error={isError}
-        fetching={isFetching}
-        onSortingBy={setSortingBy}
-        rows={data.data}
-        sortingBy={sortingBy}
-      />
+      <Table error={isError} fetching={isFetching} rows={data.rows} />
       <Pagination
         fetching={isFetching}
         onPageChange={setPage}
